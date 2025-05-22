@@ -1,0 +1,28 @@
+name: Terraform Infra
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Setup Kubeconfig
+      run: |
+        mkdir -p ~/.kube
+        echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 -d > ~/.kube/config
+
+    - name: Terraform Init
+      run: terraform init
+      working-directory: infra/terraform
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      working-directory: infra/terraform

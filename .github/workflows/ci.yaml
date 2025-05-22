@@ -1,0 +1,33 @@
+name: CI Python + Sonar
+
+on:
+  pull_request:
+    branches: [ main, dev]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install Poetry
+      run: curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Install deps
+      run: poetry install
+
+    - name: Run tests
+      run: poetry run pytest
+
+    # - name: SonarCloud Scan
+    #   uses: SonarSource/sonarcloud-github-action@v1.8
+    #   with:
+    #     projectBaseDir: .
+    #   env:
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
