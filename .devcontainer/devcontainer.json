@@ -1,4 +1,11 @@
 {
+  "name": "Python + Terraform Dev",
+  "image": "mcr.microsoft.com/devcontainers/python:3.9",
+  "features": {
+    "ghcr.io/devcontainers/features/terraform:1": {},
+    "ghcr.io/devcontainers-contrib/features/poetry:2.0.17": {}
+  },
+  "postCreateCommand": "poetry install",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -6,11 +13,5 @@
         "hashicorp.terraform"
       ]
     }
-  },
-  "features": {
-    "ghcr.io/devcontainers/features/terraform:1": {}
-  },
-  "image": "mcr.microsoft.com/devcontainers/python:3.9",
-  "name": "Python + Terraform Dev",
-  "postCreateCommand": "poetry install"
+  }
 }
