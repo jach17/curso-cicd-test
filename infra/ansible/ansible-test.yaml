@@ -1,0 +1,20 @@
+- name: Demo básica de Ansible
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Mostrar mensaje de bienvenida
+      debug:
+        msg: "Ansible está corriendo correctamente en localhost."
+
+    - name: Ejecutar un comando simple
+      command: echo "Hola desde Ansible"
+
+    - name: Crear un archivo temporal
+      file:
+        path: /tmp/demo-ansible.txt
+        state: touch
+
+    - name: Verificar conectividad localhost
+      ping:

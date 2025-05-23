@@ -4,18 +4,26 @@ provider "kubernetes" {
 
 resource "kubernetes_namespace" "demo" {
   metadata {
-    name = "python-demo"
+    name = "demo"
   }
 }
 
-resource "kubernetes_config_map" "app_config" {
+resource "kubernetes_pod" "nginx" {
   metadata {
-    name      = "app-config"
+    name      = "nginx-demo"
     namespace = kubernetes_namespace.demo.metadata[0].name
+    labels = {
+      app = "nginx"
+    }
   }
 
-  data = {
-    APP_MODE = "dev"
-    OWNER    = "arqui"
+  spec {
+    container {
+      image = "nginx:latest"
+      name  = "nginx"
+      port {
+        container_port = 80
+      }
+    }
   }
 }
